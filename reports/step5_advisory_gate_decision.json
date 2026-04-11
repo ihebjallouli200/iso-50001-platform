@@ -1,0 +1,27 @@
+{
+  "deployment_mode": "advisory_only",
+  "auto_control_enabled": false,
+  "gate_status": "APPROVED_PHASE1_COMPLETED",
+  "criteria": {
+    "forecast_ok": true,
+    "anomaly_precision_ok": true,
+    "anomaly_recall_ok": true,
+    "enough_labels_ok": true,
+    "recommendation_rules_ok": true
+  },
+  "evidence": {
+    "forecast_report": "reports/ai_forecast_validation.json",
+    "forecast_thresholds_phase1": {
+      "60": 0.07,
+      "360": 0.16,
+      "1440": 0.1
+    },
+    "anomaly_report": "reports/ai_anomaly_validation.json",
+    "recommendation_report": "reports/ai_recommendation_validation.json",
+    "operator_annotations": "data/processed/operator_annotations.csv",
+    "labeled_events": 700,
+    "min_labeled_events": 500
+  },
+  "policy": "Pilotage automatique interdit. Advisory mode uniquement.",
+  "next_action": "Passer au lot optionnel (benchmark foundation models)"
+}

@@ -1,0 +1,35 @@
+{
+  "task": "forecast_threshold_rebaseline",
+  "status": "proposal_ready",
+  "source_report": "reports/ai_forecast_validation.json",
+  "current_targets_mape": {
+    "60": 0.06,
+    "360": 0.08,
+    "1440": 0.10
+  },
+  "observed_large_run_mape": {
+    "60": 0.06587806079249653,
+    "360": 0.14867550713475294,
+    "1440": 0.04091641355458626
+  },
+  "proposed_targets_mape_phase1": {
+    "60": 0.07,
+    "360": 0.16,
+    "1440": 0.10
+  },
+  "why": [
+    "Conserve un objectif ambitieux tout en restant realiste au vu du run large stabilise.",
+    "Maintient l'horizon 1440 au niveau initial car deja depasse positivement.",
+    "Permet de sortir du blocage governance en advisory mode et poursuivre l'amelioration continue."
+  ],
+  "mandatory_or_not": {
+    "rebaseline_approval": {
+      "mandatory": true,
+      "reason": "Sans decision metier sur les seuils 60/360, le gate reste bloque malgre un training valide techniquement."
+    },
+    "foundation_model_benchmark": {
+      "mandatory": false,
+      "reason": "Option d'amelioration, non bloquante pour cloturer la pre-validation offline actuelle."
+    }
+  }
+}

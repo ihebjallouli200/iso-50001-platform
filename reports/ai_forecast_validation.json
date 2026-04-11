@@ -1,0 +1,66 @@
+{
+  "task": "consumption_forecasting",
+  "status": "completed",
+  "dataset": "machine_telemetry_1min_12m.csv",
+  "lookback_minutes": 120,
+  "results": [
+    {
+      "horizon_minutes": 60,
+      "model_kind": "sklearn_hist_gradient_boosting",
+      "samples": {
+        "train": 50000,
+        "val": 26973,
+        "test": 26974
+      },
+      "metrics": {
+        "mape": 0.06587806079249653,
+        "rmse": 3.1256376143186695,
+        "mae": 2.160426586079546,
+        "mape_naive": 0.08546735346317291,
+        "improvement_vs_naive_pct": 22.920205057147612
+      }
+    },
+    {
+      "horizon_minutes": 360,
+      "model_kind": "sklearn_hist_gradient_boosting",
+      "samples": {
+        "train": 50000,
+        "val": 26928,
+        "test": 26929
+      },
+      "metrics": {
+        "mape": 0.14867550713475294,
+        "rmse": 6.434057036817402,
+        "mae": 4.68968003769308,
+        "mape_naive": 0.3251503109931946,
+        "improvement_vs_naive_pct": 54.274837787910116
+      }
+    },
+    {
+      "horizon_minutes": 1440,
+      "model_kind": "sklearn_hist_gradient_boosting",
+      "samples": {
+        "train": 50000,
+        "val": 26766,
+        "test": 26767
+      },
+      "metrics": {
+        "mape": 0.04091641355458626,
+        "rmse": 1.9684156248130011,
+        "mae": 1.4071305256865745,
+        "mape_naive": 0.05316419154405594,
+        "improvement_vs_naive_pct": 23.037645516193415
+      }
+    }
+  ],
+  "targets_mape": {
+    "60": 0.06,
+    "360": 0.08,
+    "1440": 0.1
+  },
+  "pass": {
+    "60": false,
+    "360": false,
+    "1440": true
+  }
+}

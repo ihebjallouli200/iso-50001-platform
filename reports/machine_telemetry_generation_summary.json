@@ -1,0 +1,190 @@
+{
+  "ok": true,
+  "input": "data\\raw\\synthetic_measurements.csv",
+  "output": "data\\processed\\machine_telemetry_1min_12m.csv",
+  "machines": 10,
+  "rows": 5256000,
+  "anomaly_rows": 355808,
+  "anomaly_rate": 0.067696,
+  "target_anomaly_rate": 0.05,
+  "required_range": [
+    0.03,
+    0.08
+  ],
+  "markov": "used",
+  "pandapower": "used",
+  "validation_failures": 0,
+  "validation_pass": true,
+  "machine_summaries": [
+    {
+      "machine_id": "1",
+      "rows": 525600,
+      "anomaly_rows": 41737,
+      "anomaly_rate": 0.079408,
+      "types": {
+        "electrical_thd_over_8": 10337,
+        "electrical_cos_phi_low": 2551,
+        "electrical_harmonics_over_5": 4124,
+        "electrical_kva_spike_without_output": 3233,
+        "productive_kwh_drift_no_oee_drop": 4572,
+        "productive_oee_below_60_normal_kwh": 3807,
+        "productive_idle_over_30min_with_kwh": 13113
+      },
+      "fallback_rule_fixes": 6115,
+      "peak_weighting": "higher entry probability during output peaks"
+    },
+    {
+      "machine_id": "2",
+      "rows": 525600,
+      "anomaly_rows": 31403,
+      "anomaly_rate": 0.059747,
+      "types": {
+        "electrical_thd_over_8": 7546,
+        "electrical_cos_phi_low": 2024,
+        "electrical_harmonics_over_5": 3454,
+        "electrical_kva_spike_without_output": 2709,
+        "productive_kwh_drift_no_oee_drop": 3662,
+        "productive_oee_below_60_normal_kwh": 3205,
+        "productive_idle_over_30min_with_kwh": 8803
+      },
+      "fallback_rule_fixes": 4819,
+      "peak_weighting": "higher entry probability during output peaks"
+    },
+    {
+      "machine_id": "3",
+      "rows": 525600,
+      "anomaly_rows": 41876,
+      "anomaly_rate": 0.079673,
+      "types": {
+        "electrical_thd_over_8": 9855,
+        "electrical_cos_phi_low": 2516,
+        "electrical_harmonics_over_5": 4310,
+        "electrical_kva_spike_without_output": 3235,
+        "productive_kwh_drift_no_oee_drop": 4580,
+        "productive_oee_below_60_normal_kwh": 3643,
+        "productive_idle_over_30min_with_kwh": 13737
+      },
+      "fallback_rule_fixes": 6133,
+      "peak_weighting": "higher entry probability during output peaks"
+    },
+    {
+      "machine_id": "4",
+      "rows": 525600,
+      "anomaly_rows": 40540,
+      "anomaly_rate": 0.077131,
+      "types": {
+        "electrical_thd_over_8": 9656,
+        "electrical_cos_phi_low": 2535,
+        "electrical_harmonics_over_5": 4484,
+        "electrical_kva_spike_without_output": 3180,
+        "productive_kwh_drift_no_oee_drop": 4359,
+        "productive_oee_below_60_normal_kwh": 3658,
+        "productive_idle_over_30min_with_kwh": 12668
+      },
+      "fallback_rule_fixes": 5817,
+      "peak_weighting": "higher entry probability during output peaks"
+    },
+    {
+      "machine_id": "5",
+      "rows": 525600,
+      "anomaly_rows": 31938,
+      "anomaly_rate": 0.060765,
+      "types": {
+        "electrical_thd_over_8": 7895,
+        "electrical_cos_phi_low": 2099,
+        "electrical_harmonics_over_5": 3336,
+        "electrical_kva_spike_without_output": 2602,
+        "productive_kwh_drift_no_oee_drop": 3849,
+        "productive_oee_below_60_normal_kwh": 3092,
+        "productive_idle_over_30min_with_kwh": 9065
+      },
+      "fallback_rule_fixes": 5064,
+      "peak_weighting": "higher entry probability during output peaks"
+    },
+    {
+      "machine_id": "6",
+      "rows": 525600,
+      "anomaly_rows": 34352,
+      "anomaly_rate": 0.065358,
+      "types": {
+        "electrical_thd_over_8": 8223,
+        "electrical_cos_phi_low": 2095,
+        "electrical_harmonics_over_5": 3614,
+        "electrical_kva_spike_without_output": 2407,
+        "productive_kwh_drift_no_oee_drop": 3578,
+        "productive_oee_below_60_normal_kwh": 3241,
+        "productive_idle_over_30min_with_kwh": 11194
+      },
+      "fallback_rule_fixes": 4575,
+      "peak_weighting": "higher entry probability during output peaks"
+    },
+    {
+      "machine_id": "7",
+      "rows": 525600,
+      "anomaly_rows": 33620,
+      "anomaly_rate": 0.063965,
+      "types": {
+        "electrical_thd_over_8": 7622,
+        "electrical_cos_phi_low": 2101,
+        "electrical_harmonics_over_5": 3368,
+        "electrical_kva_spike_without_output": 2472,
+        "productive_kwh_drift_no_oee_drop": 3531,
+        "productive_oee_below_60_normal_kwh": 3057,
+        "productive_idle_over_30min_with_kwh": 11469
+      },
+      "fallback_rule_fixes": 4683,
+      "peak_weighting": "higher entry probability during output peaks"
+    },
+    {
+      "machine_id": "8",
+      "rows": 525600,
+      "anomaly_rows": 33580,
+      "anomaly_rate": 0.063889,
+      "types": {
+        "electrical_thd_over_8": 7556,
+        "electrical_cos_phi_low": 2104,
+        "electrical_harmonics_over_5": 3377,
+        "electrical_kva_spike_without_output": 2629,
+        "productive_kwh_drift_no_oee_drop": 3697,
+        "productive_oee_below_60_normal_kwh": 3025,
+        "productive_idle_over_30min_with_kwh": 11192
+      },
+      "fallback_rule_fixes": 5050,
+      "peak_weighting": "higher entry probability during output peaks"
+    },
+    {
+      "machine_id": "9",
+      "rows": 525600,
+      "anomaly_rows": 33427,
+      "anomaly_rate": 0.063598,
+      "types": {
+        "electrical_thd_over_8": 8041,
+        "electrical_cos_phi_low": 2206,
+        "electrical_harmonics_over_5": 3316,
+        "electrical_kva_spike_without_output": 2538,
+        "productive_kwh_drift_no_oee_drop": 3626,
+        "productive_oee_below_60_normal_kwh": 3207,
+        "productive_idle_over_30min_with_kwh": 10493
+      },
+      "fallback_rule_fixes": 5027,
+      "peak_weighting": "higher entry probability during output peaks"
+    },
+    {
+      "machine_id": "10",
+      "rows": 525600,
+      "anomaly_rows": 33335,
+      "anomaly_rate": 0.063423,
+      "types": {
+        "electrical_thd_over_8": 8427,
+        "electrical_cos_phi_low": 2113,
+        "electrical_harmonics_over_5": 3373,
+        "electrical_kva_spike_without_output": 2486,
+        "productive_kwh_drift_no_oee_drop": 3286,
+        "productive_oee_below_60_normal_kwh": 3104,
+        "productive_idle_over_30min_with_kwh": 10546
+      },
+      "fallback_rule_fixes": 4299,
+      "peak_weighting": "higher entry probability during output peaks"
+    }
+  ]
+}

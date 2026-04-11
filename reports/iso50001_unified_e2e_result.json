@@ -1,0 +1,47 @@
+{
+  "generatedAt": "2026-04-09T20:10:47.277Z",
+  "testId": "ISO50001_UNIFIED_E2E_V1",
+  "baseUrl": "http://localhost:4001",
+  "machineId": 1,
+  "artifacts": {
+    "pdcaCycleId": 47,
+    "anomalyId": 50,
+    "recommendationId": 51,
+    "finalPdcaPhase": "Check",
+    "enpiNormalized": 2.054167,
+    "baselineEnpi": 2.0542,
+    "dashboardDataAvailability": {
+      "energyTimelineCount": 24,
+      "siteComparisonCount": 3
+    }
+  },
+  "governanceEvidence": {
+    "before": {
+      "anomalyDetectedMlModel": 46,
+      "pdcaTransition": 67,
+      "enpiRecalculated": 200,
+      "aiIsoCouplingApplied": 68
+    },
+    "after": {
+      "anomalyDetectedMlModel": 47,
+      "pdcaTransition": 69,
+      "enpiRecalculated": 200,
+      "aiIsoCouplingApplied": 70
+    },
+    "delta": {
+      "anomalyDetectedMlModel": 1,
+      "pdcaTransition": 2,
+      "enpiRecalculated": 3,
+      "aiIsoCouplingApplied": 2
+    }
+  },
+  "assertions": {
+    "inferencePredicted": true,
+    "pdcaAfterInference": "Do",
+    "pdcaAfterRecommendationAccepted": "Check",
+    "dashboardDataAvailable": true,
+    "governanceTrailComplete": true,
+    "governanceDeltaThresholdsPassed": true
+  },
+  "status": "passed"
+}

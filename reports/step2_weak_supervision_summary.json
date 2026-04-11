@@ -1,0 +1,20 @@
+{
+  "rows": 59205,
+  "weak_label_counts": {
+    "0": 42429,
+    "-1": 16776
+  },
+  "final_label_counts": {
+    "0": 42429,
+    "-1": 16776
+  },
+  "label_source_counts": {
+    "rule_based_weak_supervision": 59205
+  },
+  "operator_annotations_enabled": true,
+  "operator_annotations_file_exists": true,
+  "operator_annotations_count": 0,
+  "avg_weak_score": 0.056670889282999744,
+  "oracle_mode_enabled": false,
+  "output_csv": "C:\\Users\\echre\\OneDrive\\Bureau\\Platforme de Mangement Energitique conforme à l'ISO 50001\\data\\interim\\step2_weak_labels.csv"
+}

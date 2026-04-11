@@ -1,0 +1,51 @@
+{
+  "fold_count": 5,
+  "horizon_metrics": [
+    {
+      "horizon": "1h",
+      "folds": 5,
+      "mape_naive": 0.48952334125606334,
+      "mape_candidate": 0.6639229989147328,
+      "improvement_pct": -35.62642328988421
+    },
+    {
+      "horizon": "24h",
+      "folds": 5,
+      "mape_naive": 0.9176341601688709,
+      "mape_candidate": 0.6639229989147328,
+      "improvement_pct": 27.64839979447234
+    },
+    {
+      "horizon": "7d",
+      "folds": 5,
+      "mape_naive": 0.9584279073209038,
+      "mape_candidate": 0.6639229989147328,
+      "improvement_pct": 30.727914552217218
+    }
+  ],
+  "anomaly_precision": NaN,
+  "anomaly_recall": NaN,
+  "evaluation_target": null,
+  "labeled_events": 0,
+  "min_labeled_events": 500,
+  "targets": {
+    "mape": {
+      "1h": 0.06,
+      "24h": 0.1,
+      "7d": 0.15
+    },
+    "anomaly_recall_min": 0.85,
+    "anomaly_precision_min": 0.6
+  },
+  "pass": {
+    "forecast": {
+      "1h": false,
+      "24h": false,
+      "7d": false
+    },
+    "anomaly_precision": false,
+    "anomaly_recall": false,
+    "enough_labels": false
+  },
+  "details_csv": "C:\\Users\\echre\\OneDrive\\Bureau\\Platforme de Mangement Energitique conforme à l'ISO 50001\\reports\\step4_rolling_validation_details.csv"
+}

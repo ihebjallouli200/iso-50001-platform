@@ -1,0 +1,6 @@
+{
+  "status": "LOCKED",
+  "assets_count": 3,
+  "output_csv": "C:\\Users\\echre\\OneDrive\\Bureau\\Platforme de Mangement Energitique conforme à l'ISO 50001\\reports\\step1_business_metrics_lock.csv",
+  "note": "Métriques métier verrouillées par type d'actif avec seuils cibles + distribution observée"
+}

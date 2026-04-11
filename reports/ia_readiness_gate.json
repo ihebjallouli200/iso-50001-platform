@@ -1,0 +1,181 @@
+{
+  "gate": {
+    "decision": "BLOCKED",
+    "autoControlEligible": false,
+    "mode": "advisory_only"
+  },
+  "thresholds": {
+    "human_labels_total_min": 500,
+    "labels_per_class_machine_min": 30,
+    "quality_completeness_min": 0.98,
+    "quality_duplicate_ratio_max": 0.005,
+    "quality_monotonic_violations_max": 0
+  },
+  "evidence": {
+    "validationSummary": "C:\\Users\\echre\\OneDrive\\Bureau\\Platforme de Mangement Energitique conforme \u00e0 l'ISO 50001\\reports\\step4_rolling_validation_summary.json",
+    "qualityReport": "C:\\Users\\echre\\OneDrive\\Bureau\\Platforme de Mangement Energitique conforme \u00e0 l'ISO 50001\\data\\processed\\audit\\quality_synthetic.json",
+    "step2WeakLabels": "C:\\Users\\echre\\OneDrive\\Bureau\\Platforme de Mangement Energitique conforme \u00e0 l'ISO 50001\\data\\interim\\step2_weak_labels.csv",
+    "operatorAnnotations": "C:\\Users\\echre\\OneDrive\\Bureau\\Platforme de Mangement Energitique conforme \u00e0 l'ISO 50001\\data\\processed\\operator_annotations.csv"
+  },
+  "checks": {
+    "forecast": {
+      "passByHorizon": {
+        "1h": false,
+        "24h": false,
+        "7d": false
+      },
+      "allPass": false
+    },
+    "anomaly": {
+      "precisionPass": false,
+      "recallPass": false
+    },
+    "dataQuality": {
+      "pass": false,
+      "completeness_global": 0.75,
+      "duplicate_ratio": 0.0,
+      "monotonic_violations": 0
+    },
+    "labels": {
+      "humanLabelsCount": 0,
+      "humanLabelsTotalPass": false,
+      "coverageByClassMachine": {
+        "coverage": {
+          "CONSUMPTION_DRIFT": {
+            "compressor": 6662,
+            "conveyor": 3508,
+            "pump": 6479
+          },
+          "OEE_MISMATCH": {
+            "compressor": 15,
+            "conveyor": 95,
+            "pump": 17
+          }
+        },
+        "perCell": [
+          {
+            "anomalyClass": "CONSUMPTION_DRIFT",
+            "machineType": "compressor",
+            "count": 6662,
+            "minRequired": 30,
+            "pass": true
+          },
+          {
+            "anomalyClass": "CONSUMPTION_DRIFT",
+            "machineType": "conveyor",
+            "count": 3508,
+            "minRequired": 30,
+            "pass": true
+          },
+          {
+            "anomalyClass": "CONSUMPTION_DRIFT",
+            "machineType": "pump",
+            "count": 6479,
+            "minRequired": 30,
+            "pass": true
+          },
+          {
+            "anomalyClass": "OEE_MISMATCH",
+            "machineType": "compressor",
+            "count": 15,
+            "minRequired": 30,
+            "pass": false
+          },
+          {
+            "anomalyClass": "OEE_MISMATCH",
+            "machineType": "conveyor",
+            "count": 95,
+            "minRequired": 30,
+            "pass": true
+          },
+          {
+            "anomalyClass": "OEE_MISMATCH",
+            "machineType": "pump",
+            "count": 17,
+            "minRequired": 30,
+            "pass": false
+          }
+        ],
+        "failingCells": [
+          {
+            "anomalyClass": "OEE_MISMATCH",
+            "machineType": "compressor",
+            "count": 15,
+            "minRequired": 30
+          },
+          {
+            "anomalyClass": "OEE_MISMATCH",
+            "machineType": "pump",
+            "count": 17,
+            "minRequired": 30
+          }
+        ],
+        "pass": false,
+        "totalCells": 6,
+        "passingCells": 4
+      }
+    }
+  },
+  "blockers": [
+    {
+      "code": "forecast_thresholds_not_met",
+      "message": "Forecast thresholds are not met for one or more horizons.",
+      "details": {
+        "failedHorizons": [
+          "1h",
+          "24h",
+          "7d"
+        ]
+      }
+    },
+    {
+      "code": "anomaly_precision_not_met",
+      "message": "Anomaly precision threshold is not met."
+    },
+    {
+      "code": "anomaly_recall_not_met",
+      "message": "Anomaly recall threshold is not met."
+    },
+    {
+      "code": "data_quality_not_met",
+      "message": "Data quality thresholds are not met.",
+      "details": {
+        "completeness_global": 0.75,
+        "completeness_min": 0.98,
+        "duplicate_ratio": 0.0,
+        "duplicate_ratio_max": 0.005,
+        "monotonic_violations": 0,
+        "monotonic_violations_max": 0
+      }
+    },
+    {
+      "code": "human_labels_total_not_met",
+      "message": "Human labeled events total is below minimum.",
+      "details": {
+        "humanLabels": 0,
+        "minRequired": 500
+      }
+    },
+    {
+      "code": "labels_coverage_class_machine_not_met",
+      "message": "Coverage by anomaly class and machine type is below minimum in one or more cells.",
+      "details": {
+        "failingCells": [
+          {
+            "anomalyClass": "OEE_MISMATCH",
+            "machineType": "compressor",
+            "count": 15,
+            "minRequired": 30
+          },
+          {
+            "anomalyClass": "OEE_MISMATCH",
+            "machineType": "pump",
+            "count": 17,
+            "minRequired": 30
+          }
+        ],
+        "minRequiredPerCell": 30
+      }
+    }
+  ]
+}

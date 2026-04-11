@@ -1,0 +1,104 @@
+{
+  "generatedAt": "2026-04-09T20:10:54.588Z",
+  "summaryVersion": "1.0.0",
+  "scope": "platform_technical_proofs_only",
+  "acceptanceGate": {
+    "status": "passed",
+    "lastVerifiedAt": "2026-04-06T16:18:25.143Z",
+    "requiredSmokeEntryPoint": "backend/tests/smoke_http_e2e_runner.js"
+  },
+  "targetClauses": [
+    {
+      "clause": "6.4",
+      "status": "Couvert"
+    },
+    {
+      "clause": "6.5",
+      "status": "Couvert"
+    },
+    {
+      "clause": "7.5",
+      "status": "Couvert"
+    },
+    {
+      "clause": "8.1",
+      "status": "Couvert"
+    },
+    {
+      "clause": "9.1",
+      "status": "Couvert"
+    },
+    {
+      "clause": "10.2",
+      "status": "Couvert"
+    }
+  ],
+  "automatedProofs": [
+    {
+      "id": "TEST-ISO-RUNTIME",
+      "file": "backend/tests/iso_runtime_http.test.js",
+      "covers": [
+        "6.4",
+        "6.5",
+        "8.1",
+        "9.1"
+      ],
+      "description": "Runtime EnPI/EnB contracts and strict PDCA transition/status checks."
+    },
+    {
+      "id": "TEST-AI-ISO-COUPLING",
+      "file": "backend/tests/ai_iso_coupling_http.test.js",
+      "covers": [
+        "8.1",
+        "9.1",
+        "10.2"
+      ],
+      "description": "Deterministic AI to PDCA and EnPI coupling checks."
+    },
+    {
+      "id": "TEST-GRAFANA-PROVISIONING",
+      "file": "backend/tests/grafana_provisioning_contract.test.js",
+      "covers": [
+        "7.5",
+        "9.1"
+      ],
+      "description": "Grafana datasource and dashboard provisioning with required panels."
+    },
+    {
+      "id": "TEST-ISO-UNIFIED-E2E",
+      "file": "backend/tests/iso50001_unified_e2e.test.js",
+      "covers": [
+        "6.4",
+        "6.5",
+        "7.5",
+        "8.1",
+        "9.1",
+        "10.2"
+      ],
+      "description": "Unified chain: inference to EnPI/EnB to PDCA to governance to dashboard data availability."
+    }
+  ],
+  "evidenceArtifacts": [
+    {
+      "id": "EVIDENCE-ISO-UNIFIED-E2E-RESULT",
+      "file": "reports/iso50001_unified_e2e_result.json",
+      "producedBy": "backend/tests/iso50001_unified_e2e.test.js"
+    },
+    {
+      "id": "EVIDENCE-GRAFANA-DASHBOARD",
+      "file": "configs/grafana/dashboards/iso50001_operational_runtime.json",
+      "producedBy": "configs/grafana/provisioning"
+    }
+  ],
+  "unifiedE2E": {
+    "testId": "ISO50001_UNIFIED_E2E_V1",
+    "status": "passed",
+    "finalPdcaPhase": "Check",
+    "governanceDelta": {
+      "anomalyDetectedMlModel": 1,
+      "pdcaTransition": 2,
+      "enpiRecalculated": 3,
+      "aiIsoCouplingApplied": 2
+    }
+  }
+}

@@ -1,0 +1,12 @@
+retentionPolicy:
+  measurements:
+    days: 90
+    mode: drop_chunks
+  downsampling:
+    enabled: false
+  jsonFallback:
+    maxDays: 90
+  notes:
+    - "TimescaleDB source of truth"
+    - "InfluxDB used for TS observability path"
+    - "Synthetic-only ingestion required"

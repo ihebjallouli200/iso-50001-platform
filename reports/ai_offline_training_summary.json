@@ -1,0 +1,82 @@
+{
+  "task": "offline_ai_training_pipeline",
+  "status": "partial",
+  "steps": [
+    {
+      "name": "anomaly_training",
+      "command": [
+        "C:\\Users\\echre\\OneDrive\\Bureau\\Platforme de Mangement Energitique conforme \u00e0 l'ISO 50001\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\echre\\OneDrive\\Bureau\\Platforme de Mangement Energitique conforme \u00e0 l'ISO 50001\\train_autoencoder_model.py",
+        "--max-rows",
+        "180000"
+      ],
+      "returncode": 1,
+      "stdout_tail": "",
+      "stderr_tail": "Traceback (most recent call last):\n  File \"C:\\Users\\echre\\OneDrive\\Bureau\\Platforme de Mangement Energitique conforme \u00e0 l'ISO 50001\\train_autoencoder_model.py\", line 369, in <module>\n    main()\n    ~~~~^^\n  File \"C:\\Users\\echre\\OneDrive\\Bureau\\Platforme de Mangement Energitique conforme \u00e0 l'ISO 50001\\train_autoencoder_model.py\", line 361, in main\n    fit_info = trainer.fit(train_df, val_df)\n  File \"C:\\Users\\echre\\OneDrive\\Bureau\\Platforme de Mangement Energitique conforme \u00e0 l'ISO 50001\\train_autoencoder_model.py\", line 162, in fit\n    train_df = self._add_sequential_features(train_df)\n  File \"C:\\Users\\echre\\OneDrive\\Bureau\\Platforme de Mangement Energitique conforme \u00e0 l'ISO 50001\\train_autoencoder_model.py\", line 112, in _add_sequential_features\n    out[SEQUENTIAL_FEATURES] = out[SEQUENTIAL_FEATURES].fillna(method=\"bfill\").fillna(method=\"ffill\").fillna(0.0)\n                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^\nTypeError: NDFrame.fillna() got an unexpected keyword argument 'method'",
+      "success": false
+    },
+    {
+      "name": "forecast_training",
+      "command": [
+        "C:\\Users\\echre\\OneDrive\\Bureau\\Platforme de Mangement Energitique conforme \u00e0 l'ISO 50001\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\echre\\OneDrive\\Bureau\\Platforme de Mangement Energitique conforme \u00e0 l'ISO 50001\\train_lstm_model.py",
+        "--max-rows",
+        "180000",
+        "--max-train-samples",
+        "50000",
+        "--horizons",
+        "60",
+        "360",
+        "1440"
+      ],
+      "returncode": 0,
+      "stdout_tail": "      }\n    },\n    {\n      \"horizon_minutes\": 1440,\n      \"model_kind\": \"sklearn_hist_gradient_boosting\",\n      \"samples\": {\n        \"train\": 50000,\n        \"val\": 26766,\n        \"test\": 26767\n      },\n      \"metrics\": {\n        \"mape\": 0.04091641355458626,\n        \"rmse\": 1.9684156248130011,\n        \"mae\": 1.4071305256865745,\n        \"mape_naive\": 0.05316419154405594,\n        \"improvement_vs_naive_pct\": 23.037645516193415\n      }\n    }\n  ],\n  \"targets_mape\": {\n    \"60\": 0.06,\n    \"360\": 0.08,\n    \"1440\": 0.1\n  },\n  \"pass\": {\n    \"60\": false,\n    \"360\": false,\n    \"1440\": true\n  }\n}",
+      "stderr_tail": "C:\\Users\\echre\\OneDrive\\Bureau\\Platforme de Mangement Energitique conforme \u00e0 l'ISO 50001\\.venv\\Lib\\site-packages\\sklearn\\neural_network\\_multilayer_perceptron.py:785: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (80) reached and the optimization hasn't converged yet.\n  warnings.warn(",
+      "success": true
+    },
+    {
+      "name": "recommendation_expert",
+      "command": [
+        "C:\\Users\\echre\\OneDrive\\Bureau\\Platforme de Mangement Energitique conforme \u00e0 l'ISO 50001\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\echre\\OneDrive\\Bureau\\Platforme de Mangement Energitique conforme \u00e0 l'ISO 50001\\ml_pipeline\\recommendation_expert_system.py",
+        "--max-rows",
+        "180000"
+      ],
+      "returncode": 0,
+      "stdout_tail": "    \"R03_OEE_DROP_WITH_HIGH_KWH\": 3103,\n    \"R04_LABELED_ANOMALY\": 12643\n  },\n  \"rules\": [\n    {\n      \"id\": \"R01_COSPHI_LOW\",\n      \"severity\": \"medium\",\n      \"action\": \"Compenser l'energie reactive (controle batterie de condensateurs, consigne cos phi).\"\n    },\n    {\n      \"id\": \"R02_THD_HIGH\",\n      \"severity\": \"high\",\n      \"action\": \"Analyser pollution harmonique (filtrage, variateurs, qualite alimentation).\"\n    },\n    {\n      \"id\": \"R03_OEE_DROP_WITH_HIGH_KWH\",\n      \"severity\": \"high\",\n      \"action\": \"Declencher revue maintenance/procede (consommation elevee avec faible performance).\"\n    },\n    {\n      \"id\": \"R04_LABELED_ANOMALY\",\n      \"severity\": \"high\",\n      \"action\": \"Creer ticket d'investigation et plan d'action PDCA.\"\n    }\n  ],\n  \"pass\": {\n    \"coverage_min_5pct\": true,\n    \"all_rules_triggered\": true\n  }\n}",
+      "stderr_tail": "",
+      "success": true
+    }
+  ],
+  "mandatory_operations": [
+    {
+      "operation": "train_hybrid_anomaly_model",
+      "mandatory": true,
+      "why": "Detection anomalies/derives est un objectif central du lot IA.",
+      "status": false
+    },
+    {
+      "operation": "train_consumption_forecast_model",
+      "mandatory": true,
+      "why": "Prediction consommation fait partie du scope principal de developpement IA.",
+      "status": true
+    },
+    {
+      "operation": "evaluate_expert_recommendations",
+      "mandatory": true,
+      "why": "Recommandations actions doivent rester explicables et testees sur donnees synthetiques.",
+      "status": true
+    },
+    {
+      "operation": "benchmark_foundation_models",
+      "mandatory": false,
+      "why": "Comparaison TimesFM/Chronos utile mais non bloquante pour demarrer un MVP offline.",
+      "status": false
+    }
+  ],
+  "reports": {
+    "anomaly": "C:/Users/echre/OneDrive/Bureau/Platforme de Mangement Energitique conforme \u00e0 l'ISO 50001/reports/ai_anomaly_validation.json",
+    "forecast": "C:/Users/echre/OneDrive/Bureau/Platforme de Mangement Energitique conforme \u00e0 l'ISO 50001/reports/ai_forecast_validation.json",
+    "recommendations": "C:/Users/echre/OneDrive/Bureau/Platforme de Mangement Energitique conforme \u00e0 l'ISO 50001/reports/ai_recommendation_validation.json"
+  }
+}

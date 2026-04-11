@@ -1,0 +1,4 @@
+asset_type,machines,rows,date_start,date_end,cos_phi_min_target,thd_voltage_max_target,thd_current_max_target,oee_min_target,mape_target_1h,mape_target_24h,mape_target_7d,anomaly_recall_min,observed_cos_phi_p05,observed_thd_v_p95,observed_oee_p05
+compressor,1,19735,2016-01-11 17:00:00+00:00,2016-05-27 18:00:00+00:00,0.8,8.0,8.0,0.85,0.06,0.1,0.15,0.85,0.8513629669484373,5.4,0.6989244432488022
+conveyor,1,19735,2016-01-11 17:00:00+00:00,2016-05-27 18:00:00+00:00,0.8,8.0,8.0,0.88,0.06,0.1,0.14,0.85,0.8613629669484373,3.7,0.87
+pump,1,19735,2016-01-11 17:00:00+00:00,2016-05-27 18:00:00+00:00,0.8,8.0,8.0,0.85,0.06,0.1,0.15,0.85,0.8713629669484373,6.800000000000001,0.685

@@ -1,0 +1,51 @@
+{
+  "feature_columns": [
+    "kwh",
+    "kva",
+    "cos_phi",
+    "thd_v",
+    "thd_i",
+    "harm_3",
+    "harm_5",
+    "harm_7",
+    "output_pieces",
+    "output_tonnage",
+    "etat",
+    "oee"
+  ],
+  "sequential_feature_columns": [
+    "kwh_lag_1",
+    "kwh_lag_5_mean",
+    "kwh_delta_1",
+    "cos_phi_lag_1",
+    "thd_i_lag_1",
+    "thd_v_lag_1",
+    "oee_lag_1",
+    "kwh_roll_15_mean",
+    "kwh_roll_15_std"
+  ],
+  "threshold": 0.10413540848731315,
+  "ae_weight": 0.7,
+  "model_kind": "sklearn_mlp_autoencoder",
+  "fusion_head": "hist_gradient_boosting_classifier",
+  "fit": {
+    "threshold": 0.10413540848731315,
+    "val_best_f1": 0.722501640061229,
+    "val_precision": 0.6018214936247723,
+    "val_recall": 0.9037199124726477,
+    "val_samples": 27001
+  },
+  "metrics": {
+    "samples": 27000,
+    "anomaly_rate": 0.07659259259259259,
+    "precision": 0.6244460856720827,
+    "recall": 0.8176982591876208,
+    "f1_score": 0.7081239530988275,
+    "roc_auc": 0.9766769869363819,
+    "true_negatives": 23915,
+    "false_positives": 1017,
+    "false_negatives": 377,
+    "true_positives": 1691
+  },
+  "generated_at": "2026-04-05T23:21:05.947505+00:00"
+}

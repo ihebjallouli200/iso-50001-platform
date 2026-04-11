@@ -1,0 +1,7 @@
+{
+  "selection_ratio": 0.05,
+  "total_rows": 59205,
+  "uncertain_pool_rows": 16776,
+  "queue_rows": 2960,
+  "output_csv": "C:\\Users\\echre\\OneDrive\\Bureau\\Platforme de Mangement Energitique conforme à l'ISO 50001\\data\\interim\\step3_active_learning_queue.csv"
+}

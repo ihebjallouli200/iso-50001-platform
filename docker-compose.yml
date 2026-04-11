@@ -1,0 +1,65 @@
+version: "3.9"
+
+services:
+  mosquitto:
+    image: eclipse-mosquitto:2.0
+    container_name: enms-mosquitto
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./infra/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - mosquitto_data:/mosquitto/data
+      - mosquitto_log:/mosquitto/log
+
+  timescaledb:
+    image: timescale/timescaledb:latest-pg15
+    container_name: enms-timescaledb
+    environment:
+      POSTGRES_DB: enms
+      POSTGRES_USER: enms
+      POSTGRES_PASSWORD: enms
+    ports:
+      - "5432:5432"
+    volumes:
+      - timescale_data:/var/lib/postgresql/data
+
+  influxdb:
+    image: influxdb:2.7
+    container_name: enms-influxdb
+    ports:
+      - "8086:8086"
+    environment:
+      DOCKER_INFLUXDB_INIT_MODE: setup
+      DOCKER_INFLUXDB_INIT_USERNAME: admin
+      DOCKER_INFLUXDB_INIT_PASSWORD: adminadmin
+      DOCKER_INFLUXDB_INIT_ORG: enms
+      DOCKER_INFLUXDB_INIT_BUCKET: measurements
+      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: change-me
+    volumes:
+      - influxdb_data:/var/lib/influxdb2
+
+  grafana:
+    image: grafana/grafana:10.4.3
+    container_name: enms-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_INSTALL_PLUGINS: "grafana-clock-panel"
+    depends_on:
+      - timescaledb
+      - influxdb
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./configs/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro
+      - ./configs/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./configs/grafana/dashboards:/var/lib/grafana/dashboards:ro
+
+volumes:
+  mosquitto_data:
+  mosquitto_log:
+  timescale_data:
+  influxdb_data:
+  grafana_data:

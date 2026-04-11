@@ -1,0 +1,44 @@
+{
+  "task": "recommendation_actions",
+  "status": "completed",
+  "approach": "rules_plus_expert_system",
+  "dataset": "machine_telemetry_1min_12m.csv",
+  "samples": 180000,
+  "coverage": {
+    "actionable_rows": 80059,
+    "coverage_rate": 0.44477222222222224,
+    "avg_actions_per_row": 0.5254333333333333
+  },
+  "rule_trigger_counts": {
+    "R01_COSPHI_LOW": 66947,
+    "R02_THD_HIGH": 11885,
+    "R03_OEE_DROP_WITH_HIGH_KWH": 3103,
+    "R04_LABELED_ANOMALY": 12643
+  },
+  "rules": [
+    {
+      "id": "R01_COSPHI_LOW",
+      "severity": "medium",
+      "action": "Compenser l'energie reactive (controle batterie de condensateurs, consigne cos phi)."
+    },
+    {
+      "id": "R02_THD_HIGH",
+      "severity": "high",
+      "action": "Analyser pollution harmonique (filtrage, variateurs, qualite alimentation)."
+    },
+    {
+      "id": "R03_OEE_DROP_WITH_HIGH_KWH",
+      "severity": "high",
+      "action": "Declencher revue maintenance/procede (consommation elevee avec faible performance)."
+    },
+    {
+      "id": "R04_LABELED_ANOMALY",
+      "severity": "high",
+      "action": "Creer ticket d'investigation et plan d'action PDCA."
+    }
+  ],
+  "pass": {
+    "coverage_min_5pct": true,
+    "all_rules_triggered": true
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "version": "v20260406T135219Z_lstm_classifier",
+  "artifact_dir": "ml_pipeline/models/anomaly_sequential/v20260406T135219Z_lstm_classifier",
+  "model": "lstm_classifier",
+  "threshold": 0.4134564037791035,
+  "features": [
+    "kwh",
+    "kva",
+    "cos_phi",
+    "thd_v",
+    "thd_i",
+    "harm_3",
+    "harm_5",
+    "harm_7",
+    "output_pieces",
+    "output_tonnage",
+    "etat",
+    "oee"
+  ],
+  "seq_len": 30,
+  "updated_at": "2026-04-09T20:10:44.350Z",
+  "backend_activation_status": "ready"
+}

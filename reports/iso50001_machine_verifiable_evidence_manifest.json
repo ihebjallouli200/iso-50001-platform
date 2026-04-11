@@ -1,0 +1,229 @@
+{
+  "generatedAt": "2026-04-09T20:10:54.707Z",
+  "manifestType": "machine_verifiable_evidence",
+  "manifestVersion": "1.0.0",
+  "scope": "platform_technical_proofs_only",
+  "targetClauses": [
+    "6.4",
+    "6.5",
+    "7.5",
+    "8.1",
+    "9.1",
+    "10.2"
+  ],
+  "acceptanceGate": {
+    "status": "passed",
+    "requiredSmokeEntryPoint": "backend/tests/smoke_http_e2e_runner.js",
+    "lastVerifiedAt": "2026-04-06T16:18:25.143Z"
+  },
+  "tests": [
+    {
+      "id": "TEST-ISO-RUNTIME",
+      "file": "backend/tests/iso_runtime_http.test.js",
+      "covers": [
+        "6.4",
+        "6.5",
+        "8.1",
+        "9.1"
+      ],
+      "description": "Runtime EnPI/EnB contracts and strict PDCA transition/status checks.",
+      "verification": {
+        "type": "node_test",
+        "command": "node backend/tests/iso_runtime_http.test.js"
+      }
+    },
+    {
+      "id": "TEST-AI-ISO-COUPLING",
+      "file": "backend/tests/ai_iso_coupling_http.test.js",
+      "covers": [
+        "8.1",
+        "9.1",
+        "10.2"
+      ],
+      "description": "Deterministic AI to PDCA and EnPI coupling checks.",
+      "verification": {
+        "type": "node_test",
+        "command": "node backend/tests/ai_iso_coupling_http.test.js"
+      }
+    },
+    {
+      "id": "TEST-GRAFANA-PROVISIONING",
+      "file": "backend/tests/grafana_provisioning_contract.test.js",
+      "covers": [
+        "7.5",
+        "9.1"
+      ],
+      "description": "Grafana datasource and dashboard provisioning with required panels.",
+      "verification": {
+        "type": "node_test",
+        "command": "node backend/tests/grafana_provisioning_contract.test.js"
+      }
+    },
+    {
+      "id": "TEST-ISO-UNIFIED-E2E",
+      "file": "backend/tests/iso50001_unified_e2e.test.js",
+      "covers": [
+        "6.4",
+        "6.5",
+        "7.5",
+        "8.1",
+        "9.1",
+        "10.2"
+      ],
+      "description": "Unified chain: inference to EnPI/EnB to PDCA to governance to dashboard data availability.",
+      "verification": {
+        "type": "node_test",
+        "command": "node backend/tests/iso50001_unified_e2e.test.js"
+      }
+    }
+  ],
+  "apiChecks": [
+    {
+      "id": "API-ENPI-CURRENT",
+      "endpoint": "GET /api/enpi/current?machineId=1&windowHours=24",
+      "expectedContract": [
+        "data.enpiValue:number",
+        "data.enpiNormalized:number",
+        "data.status:string",
+        "meta.contractVersion:string"
+      ],
+      "coveredByTests": [
+        "TEST-ISO-RUNTIME",
+        "TEST-ISO-UNIFIED-E2E"
+      ]
+    },
+    {
+      "id": "API-ENB-BASELINE",
+      "endpoint": "GET /api/enb/baseline?machineId=1&referenceWindowHours=24",
+      "expectedContract": [
+        "data.baselineEnpi:number",
+        "data.sampleSize:number",
+        "meta.contractVersion:string"
+      ],
+      "coveredByTests": [
+        "TEST-ISO-RUNTIME",
+        "TEST-ISO-UNIFIED-E2E"
+      ]
+    },
+    {
+      "id": "API-PDCA-TRANSITION",
+      "endpoint": "POST /api/pdca/transition",
+      "expectedContract": [
+        "data.success:boolean",
+        "data.cycle.id:number",
+        "data.transition.fromPhase:string",
+        "data.transition.toPhase:string"
+      ],
+      "coveredByTests": [
+        "TEST-ISO-RUNTIME",
+        "TEST-AI-ISO-COUPLING",
+        "TEST-ISO-UNIFIED-E2E"
+      ]
+    },
+    {
+      "id": "API-INFERENCE-ANOMALY",
+      "endpoint": "POST /api/inference/anomaly",
+      "expectedContract": [
+        "data.inference.predicted:boolean",
+        "data.createdAnomaly.id:number",
+        "data.createdRecommendation.id:number",
+        "data.coupling.applied:boolean"
+      ],
+      "coveredByTests": [
+        "TEST-AI-ISO-COUPLING",
+        "TEST-ISO-UNIFIED-E2E"
+      ]
+    }
+  ],
+  "governanceQueries": [
+    {
+      "id": "GOV-ANOMALY-DETECTED",
+      "query": "/api/governance/events?type=anomalyDetected_ml_model&limit=200",
+      "expectedDeltaMin": 1,
+      "observedDelta": 1
+    },
+    {
+      "id": "GOV-PDCA-TRANSITION",
+      "query": "/api/governance/events?type=pdcaTransition&limit=200",
+      "expectedDeltaMin": 2,
+      "observedDelta": 2
+    },
+    {
+      "id": "GOV-ENPI-RECALCULATED",
+      "query": "/api/governance/events?type=enpiRecalculated&limit=200",
+      "expectedDeltaMin": 2,
+      "observedDelta": 3
+    },
+    {
+      "id": "GOV-AI-ISO-COUPLING",
+      "query": "/api/governance/events?type=aiIsoCouplingApplied&limit=200",
+      "expectedDeltaMin": 2,
+      "observedDelta": 2
+    }
+  ],
+  "dashboardDefinitions": {
+    "file": "configs/grafana/dashboards/iso50001_operational_runtime.json",
+    "dashboardUid": "enms-iso50001-runtime",
+    "dashboardTitle": "ENMS ISO 50001 Operational Runtime",
+    "panelCount": 5,
+    "requiredPanels": [
+      "EnPI realtime vs EnB",
+      "PDCA current status",
+      "Anomalies + AI score",
+      "Forecast vs actual",
+      "EnPI drift alert (24h)"
+    ],
+    "panels": [
+      {
+        "id": 1,
+        "title": "EnPI realtime vs EnB",
+        "type": "timeseries",
+        "datasourceUid": "enms-timescale"
+      },
+      {
+        "id": 2,
+        "title": "PDCA current status",
+        "type": "stat",
+        "datasourceUid": "enms-timescale"
+      },
+      {
+        "id": 3,
+        "title": "Anomalies + AI score",
+        "type": "timeseries",
+        "datasourceUid": "enms-timescale"
+      },
+      {
+        "id": 4,
+        "title": "Forecast vs actual",
+        "type": "timeseries",
+        "datasourceUid": "enms-timescale"
+      },
+      {
+        "id": 5,
+        "title": "EnPI drift alert (24h)",
+        "type": "stat",
+        "datasourceUid": "enms-timescale"
+      }
+    ]
+  },
+  "traceability": {
+    "evidenceArtifacts": [
+      {
+        "id": "EVIDENCE-ISO-UNIFIED-E2E-RESULT",
+        "file": "reports/iso50001_unified_e2e_result.json",
+        "producedBy": "backend/tests/iso50001_unified_e2e.test.js"
+      },
+      {
+        "id": "EVIDENCE-GRAFANA-DASHBOARD",
+        "file": "configs/grafana/dashboards/iso50001_operational_runtime.json",
+        "producedBy": "configs/grafana/provisioning"
+      }
+    ],
+    "unifiedE2E": {
+      "file": "reports/iso50001_unified_e2e_result.json",
+      "testId": "ISO50001_UNIFIED_E2E_V1",
+      "status": "passed",
+      "generatedAt": "2026-04-09T20:10:47.277Z"
+    }
+  }
+}

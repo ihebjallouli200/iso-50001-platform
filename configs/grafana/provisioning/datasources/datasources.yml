@@ -1,0 +1,30 @@
+apiVersion: 1
+
+datasources:
+  - name: ENMS-Timescale
+    uid: enms-timescale
+    type: postgres
+    access: proxy
+    isDefault: true
+    url: timescaledb:5432
+    user: enms
+    database: enms
+    secureJsonData:
+      password: enms
+    jsonData:
+      sslmode: disable
+      postgresVersion: 1500
+      timescaledb: true
+
+  - name: ENMS-Influx
+    uid: enms-influx
+    type: influxdb
+    access: proxy
+    url: http://influxdb:8086
+    jsonData:
+      version: Flux
+      organization: enms
+      defaultBucket: measurements
+      tlsSkipVerify: true
+    secureJsonData:
+      token: change-me

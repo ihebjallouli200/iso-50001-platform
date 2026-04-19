@@ -3069,7 +3069,16 @@ function startMainHttpServer(port = PORT) {
 
     const served = serveStatic(request, response);
     if (!served) {
-      await proxyToFrontend(request, response);
+      // SPA fallback: serve index.html for all non-file routes
+      const indexPath = path.join(__dirname, "public", "index.html");
+      if (fs.existsSync(indexPath)) {
+        response.statusCode = 200;
+        response.setHeader("Content-Type", "text/html; charset=utf-8");
+        response.end(fs.readFileSync(indexPath));
+      } else {
+        // Development mode: proxy to Vite dev server
+        await proxyToFrontend(request, response);
+      }
     }
   });
 

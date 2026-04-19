@@ -12,6 +12,7 @@
     "serve": "node backend/http_main_server.js"
   },
   "dependencies": {
+    "@influxdata/influxdb-client": "^1.35.0",
     "chart.js": "^4.5.1",
     "mqtt": "^5.15.1",
     "node-opcua": "^2.168.0",

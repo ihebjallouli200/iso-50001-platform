@@ -1019,6 +1019,81 @@ function saveStore(store) {
   fs.writeFileSync(STORE_FILE, JSON.stringify(store, null, 2), "utf-8");
 }
 
+// Debounced save for high-frequency MQTT updates
+let _mqttSaveTimer = null;
+let _mqttPendingStore = null;
+
+function _debouncedSave() {
+  if (_mqttPendingStore) {
+    saveStore(_mqttPendingStore);
+    _mqttPendingStore = null;
+  }
+}
+
+/**
+ * Update machineLive, energyTimeline, and anomalies from an MQTT message.
+ * Does load → mutate → debounced save (max 1 write per 2 seconds).
+ */
+function updateMachineLiveFromMqtt(row) {
+  const store = loadStore();
+  const machineId = Number(row.machine_id || row.machineId);
+  if (!machineId) return;
+
+  // Update machineLive
+  const liveEntry = (store.machineLive || []).find(m => m.machineId === machineId);
+  if (liveEntry) {
+    const kwh = Number(row.kwh || 0);
+    const cosP = Number(row.cos_phi || 0.95);
+    liveEntry.powerKw = Number((kwh * 60).toFixed(1));
+    liveEntry.enpi = Number((kwh / (cosP || 0.95)).toFixed(2));
+    const maxPower = Math.max(1, ...store.machineLive.map(m => m.powerKw || 1));
+    liveEntry.loadPct = Math.min(100, Math.max(0, Math.round((liveEntry.powerKw / maxPower) * 100)));
+    liveEntry.status = Number(row.etat) === 0 ? "stopped" : Number(row.etat) === 2 ? "idle" : "running";
+    liveEntry.updatedAt = new Date().toISOString();
+  }
+
+  // Create anomaly alert if label_anomalie = 1
+  if (Number(row.label_anomalie || 0) > 0 && Array.isArray(store.anomalies)) {
+    const recentAnomaly = store.anomalies.find(
+      a => a.machineId === machineId && a.status === "open" &&
+        (Date.now() - new Date(a.detectedAt).getTime()) < 300000
+    );
+
+    if (!recentAnomaly) {
+      const machine = (store.machines || []).find(m => m.id === machineId);
+      const machineName = machine ? machine.machineName : `Machine ${machineId}`;
+      const nextId = Math.max(0, ...store.anomalies.map(a => a.id || 0)) + 1;
+
+      store.anomalies.push({
+        id: nextId,
+        machineId,
+        type: "data_quality_issue",
+        severity: "major",
+        title: `Anomalie détectée — ${machineName}`,
+        message: `Issue réelle HRI-EU (gap/zero) détectée via MQTT`,
+        metric: "kwh",
+        observedValue: Number(row.kwh || 0),
+        threshold: 0,
+        status: "open",
+        detectedAt: new Date().toISOString(),
+        acknowledgedAt: null,
+        acknowledgedByUserId: null,
+        acknowledgedByName: null,
+        acknowledgementNote: null,
+      });
+    }
+  }
+
+  // Debounced save (avoid writing to disk on every single message)
+  _mqttPendingStore = store;
+  if (!_mqttSaveTimer) {
+    _mqttSaveTimer = setTimeout(() => {
+      _debouncedSave();
+      _mqttSaveTimer = null;
+    }, 2000);
+  }
+}
+
 function generateSessionToken() {
   return crypto.randomBytes(32).toString("hex");
 }
@@ -2776,4 +2851,6 @@ module.exports = {
   updateCorrectiveAction,
   generatePreAuditExport,
   listPreAuditExports,
+  loadStore,
+  updateMachineLiveFromMqtt,
 };

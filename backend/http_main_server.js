@@ -75,8 +75,11 @@ const {
   updateCorrectiveAction,
   generatePreAuditExport,
   listPreAuditExports,
+  loadStore,
+  updateMachineLiveFromMqtt,
 } = require("./core/store");
 const { runAnomalyInference } = require("./inference/anomaly_inference_client");
+const mqttConsumer = require("./ingestion/mqtt_consumer");
 const { listModelVersions, activateModelVersion, getActiveModelPointer } = require("./inference/model_version_manager");
 
 const API_PREFIX = "/api";
@@ -3073,6 +3076,20 @@ function startMainHttpServer(port = PORT) {
   server.listen(port, () => {
     console.log(`Main HTTP server running on http://localhost:${port}`);
     console.log(`Proxy frontend target: ${FRONTEND_TARGET}`);
+
+    // Start MQTT consumer if MQTT_BROKER_URL is configured
+    if (process.env.MQTT_BROKER_URL) {
+      try {
+        const mqttClient = mqttConsumer.run(updateMachineLiveFromMqtt);
+        if (mqttClient) {
+          console.log(`[mqtt] consumer started (broker=${process.env.MQTT_BROKER_URL})`);
+        }
+      } catch (error) {
+        console.error(`[mqtt] consumer failed to start: ${error.message}`);
+      }
+    } else {
+      console.log(`[mqtt] consumer skipped (MQTT_BROKER_URL not set)`);
+    }
   });
 
   return server;

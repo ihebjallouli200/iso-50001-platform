@@ -1,8 +1,8 @@
 {
-  "version": "v20260406T135219Z_lstm_classifier",
-  "artifact_dir": "ml_pipeline/models/anomaly_sequential/v20260406T135219Z_lstm_classifier",
-  "model": "lstm_classifier",
-  "threshold": 0.4134564037791035,
+  "version": "v20260419T020924Z_transformer_classifier",
+  "artifact_dir": "ml_pipeline/models/anomaly_sequential/v20260419T020924Z_transformer_classifier",
+  "model": "transformer_classifier",
+  "threshold": 0.8686035933950603,
   "features": [
     "kwh",
     "kva",
@@ -18,6 +18,6 @@
     "oee"
   ],
   "seq_len": 30,
-  "updated_at": "2026-04-09T20:10:44.350Z",
+  "updated_at": "2026-04-19T02:09:24.673914Z",
   "backend_activation_status": "ready"
 }

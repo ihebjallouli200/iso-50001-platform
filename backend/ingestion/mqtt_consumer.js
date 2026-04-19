@@ -69,6 +69,35 @@ async function processMqttMessage(topic, payloadBuffer) {
       }
     }
   }
+
+  // Write to TimescaleDB (async, non-blocking)
+  try {
+    const { writeMeasurements, isDriverAvailable } = require("./timescale_writer");
+    if (isDriverAvailable()) {
+      const dbRows = rows.map(r => ({
+        timestamp: r.timestamp || new Date().toISOString(),
+        machineId: String(r.machine_id || r.machineId || ""),
+        kWh: Number(r.kwh || 0),
+        kVA: Number(r.kva || 0),
+        cosPhi: Number(r.cos_phi || 0.95),
+        thdV: Number(r.thd_v || 0),
+        thdI: Number(r.thd_i || 0),
+        harm3: Number(r.harm_3 || 0),
+        harm5: Number(r.harm_5 || 0),
+        harm7: Number(r.harm_7 || 0),
+        outputPieces: Number(r.output_pieces || 0),
+        outputTonnage: Number(r.output_tonnage || 0),
+        etat: Number(r.etat || 0),
+        oee: Number(r.oee || 0),
+        labelAnomalie: Number(r.label_anomalie || 0),
+      }));
+      writeMeasurements(dbRows).catch(err => {
+        if (_messageCount % 100 === 0) {
+          console.error(`[mqtt] db write error: ${err.message}`);
+        }
+      });
+    }
+  } catch (_) { /* timescale_writer not available */ }
 }
 
 function run(updateFn) {

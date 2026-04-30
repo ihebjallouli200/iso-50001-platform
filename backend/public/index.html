@@ -1,18 +1,117 @@
-<!DOCTYPE html>
-<html lang="fr" class="dark">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Plateforme de Management Énergétique ISO 50001 — Monitoring temps réel, gestion PDCA, conformité audit et recommandations IA." />
-    <title>EnMS ISO 50001 — Plateforme Énergie</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
-    <script type="module" crossorigin src="/assets/index-Dvr_VrFZ.js"></script>
-    <link rel="modulepreload" crossorigin href="/assets/recharts-BY5ZRUHZ.js">
-    <link rel="stylesheet" crossorigin href="/assets/index-D65SGTr4.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<!doctype html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EnMS ISO 50001 — Plateforme de Management Énergétique</title>
+  <meta name="description"
+    content="Plateforme de management énergétique ISO 50001 avec monitoring temps réel, détection IA d'anomalies, cycle PDCA et conformité audit." />
+  <link rel="stylesheet" href="app.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+</head>
+
+<body>
+
+  <!-- ========== LOGIN VIEW ========== -->
+  <div id="loginView" class="login-container">
+    <div class="login-card">
+      <h1>⚡ EnMS ISO 50001</h1>
+      <p class="subtitle">Plateforme de Management Énergétique</p>
+      <div class="quick-login">
+        <button class="btn btn-secondary btn-sm" data-account="admin.energie">Admin Énergie</button>
+        <button class="btn btn-secondary btn-sm" data-account="resp.site">Resp. Site</button>
+        <button class="btn btn-secondary btn-sm" data-account="auditeur.interne">Auditeur</button>
+        <button class="btn btn-secondary btn-sm" data-account="operateur">Opérateur</button>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Nom d'utilisateur</label>
+        <input id="username" class="form-input" value="admin.energie" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Mot de passe</label>
+        <input id="password" class="form-input" type="password" value="Admin50001!" />
+      </div>
+      <button class="btn btn-primary" id="loginBtn" style="width:100%">Se connecter</button>
+      <p id="loginError" class="text-red mt-1" style="font-size:13px"></p>
+    </div>
+  </div>
+
+  <!-- ========== APP SHELL ========== -->
+  <div id="appShell" class="hidden">
+
+    <!-- SIDEBAR -->
+    <nav class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <span class="logo">⚡ EnMS</span>
+      </div>
+      <div class="sidebar-nav">
+        <div class="nav-item active" data-view="dashboard"><span class="nav-icon">📊</span><span
+            class="nav-label">Dashboard</span></div>
+        <div class="nav-item" data-view="machine"><span class="nav-icon">⚙️</span><span class="nav-label">Machine</span>
+        </div>
+        <div class="nav-item" data-view="pdca"><span class="nav-icon">🔄</span><span class="nav-label">PDCA</span></div>
+        <div class="nav-item" data-view="recommendations"><span class="nav-icon">💡</span><span
+            class="nav-label">Recommandations</span></div>
+        <div class="nav-item" data-view="governance"><span class="nav-icon">🏛️</span><span
+            class="nav-label">Gouvernance</span></div>
+        <div class="nav-item" data-view="audit"><span class="nav-icon">📋</span><span class="nav-label">Audit</span>
+        </div>
+        <div class="nav-item" data-view="dataQuality"><span class="nav-icon">📈</span><span class="nav-label">Qualité
+            Data</span></div>
+        <div class="nav-item" data-view="incidents"><span class="nav-icon">⚠️</span><span
+            class="nav-label">Incidents</span></div>
+        <div class="nav-item" data-view="settings"><span class="nav-icon">🔧</span><span
+            class="nav-label">Paramètres</span></div>
+      </div>
+      <div class="sidebar-footer">
+        <span>v2.0 ISO 50001</span>
+      </div>
+    </nav>
+
+    <!-- TOPBAR -->
+    <header class="topbar" id="topbar">
+      <div class="topbar-left">
+        <button class="btn-mobile-toggle btn-icon" id="mobileToggle" onclick="toggleMobileSidebar()">☰</button>
+        <h2 id="pageTitle">Dashboard</h2>
+        <span class="badge badge-live"><span class="status-dot online pulse"></span> Live</span>
+      </div>
+      <div class="topbar-right">
+        <div class="alert-bell" id="alertBell" onclick="showAlertPanel()" title="Alertes">
+          🔔<span class="alert-badge" id="alertBadge">0</span>
+        </div>
+        <div class="user-info">
+          <div class="user-name" id="topUserName">—</div>
+          <div class="user-role" id="topUserRole">—</div>
+        </div>
+        <div class="avatar" id="topAvatar">—</div>
+        <button class="btn btn-secondary btn-sm" id="logoutBtn">⏻</button>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+      <section id="v_dashboard" class="view active"></section>
+      <section id="v_machine" class="view"></section>
+      <section id="v_pdca" class="view"></section>
+      <section id="v_recommendations" class="view"></section>
+      <section id="v_governance" class="view"></section>
+      <section id="v_audit" class="view"></section>
+      <section id="v_dataQuality" class="view"></section>
+      <section id="v_incidents" class="view"></section>
+      <section id="v_settings" class="view"></section>
+    </main>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast" class="toast"></div>
+
+  <!-- MODAL -->
+  <div id="modalOverlay" class="modal-overlay">
+    <div class="modal" id="modalContent"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
 </html>
